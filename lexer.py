@@ -1,10 +1,5 @@
 import ply.lex as lex
 from re import findall
-from sys import argv
-
-file_name = argv[1]
-with open(file_name, 'r') as reader:
-    file_contents = reader.read()
 
 ###########################################
 #  _       ______ __   __ ______  _____   #
@@ -143,7 +138,6 @@ def t_error(t):
 # USE #
 #-----#
 lexer = lex.lex()
-lexer.input(file_contents)
 
 # for tok in lexer:
 #     print(tok)

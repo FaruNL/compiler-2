@@ -1,20 +1,6 @@
 import ply.yacc as yacc
 from lexer import tokens
-from sys import argv
 from ast_custom import Number, BinOp, Expr, Node
-
-#############################################
-#   _____  ______  _______  _    _  _____   #
-#  / ____||  ____||__   __|| |  | ||  __ \  #
-# | (___  | |__      | |   | |  | || |__) | #
-#  \___ \ |  __|     | |   | |  | ||  ___/  #
-#  ____) || |____    | |   | |__| || |      #
-# |_____/ |______|   |_|    \____/ |_|      #
-#############################################
-
-file_name = argv[1]
-with open(file_name, 'r') as reader:
-    file_contents = reader.read()
 
 ###################################################
 #  _____          _____    _____  ______  _____   #
@@ -228,7 +214,3 @@ def p_error(p):
 
 
 parser = yacc.yacc('SLR')
-
-result = parser.parse(file_contents)
-
-# print(result)
