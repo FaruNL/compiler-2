@@ -1,6 +1,6 @@
 import ply.yacc as yacc
 from lexer import tokens
-from ast_custom import Number, BinOp, Expr, Node
+from semantic import Number, BinOp, Expr, Node
 
 ###################################################
 #  _____          _____    _____  ______  _____   #
