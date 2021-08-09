@@ -16,6 +16,7 @@ try:
     with open(file_name, 'r') as reader:
         file_contents = reader.read()
     result = parser.parse(file_contents)
+    print(f'\n\n{result}')
 
 except FileNotFoundError as err:
     print(f'Could not open file {file_name}')

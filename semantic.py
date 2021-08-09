@@ -1,20 +1,24 @@
-class Node:
-    def __init__(self,type,children=None,leaf=None):
-         self.type = type
-         if children:
-              self.children = children
-         else:
-              self.children = [ ]
-         self.leaf = leaf
+class Node(object):
+    def __init__(self, type, children=None, leaf=None):
+        self.type = type
+        if children:
+            self.children = children
+        else:
+            self.children = []
+        self.leaf = leaf
 
-class Expr: pass
+    def __str__(self):
+        return self.traverse(1)
 
-class BinOp(Expr):
-    def __init__(self,left,op,right):
-        self.left = left
-        self.right = right
-        self.op = op
-
-class Number(Expr):
-    def __init__(self,value):
-        self.value = value
+    def traverse(self, i):
+        s = self.type
+        indent = "\n" + i*' |'
+        if self.leaf != None:
+            if isinstance(self.leaf, Node):
+                print("Node")
+                s += indent + self.leaf.traverse(i+1)
+            else:
+                s += indent + str(self.leaf)
+        for children in self.children:
+            s += indent + children.traverse(i+1)
+        return s

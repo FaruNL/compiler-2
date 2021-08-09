@@ -1,6 +1,6 @@
 import ply.yacc as yacc
 from lexer import tokens
-from semantic import Number, BinOp, Expr, Node
+from semantic import Node
 
 ###################################################
 #  _____          _____    _____  ______  _____   #
@@ -28,13 +28,13 @@ precedence = (
 
 def p_program(p):
     '''program : block DOT'''
-    p[0] = Node('program', p[1])
+    p[0] = Node('program', [p[1]])
     print("program")
 
 
 def p_block(p):
     '''block : constDecl varDecl procDecl statement'''
-    p[0] = Node('block', [p[1], p[2], p[3], p[4]])
+    p[0] = Node('block', [[p[1], p[2], p[3], p[4]]])
     print("block")
 
 
@@ -137,8 +137,8 @@ def p_relation(p):
                 | GTE'''
     if p[1] == ':=':
         print("relation :=")
-    elif p[1] == '!=':
-        print("relation !=")
+    elif p[1] == '<>':
+        print("relation <>")
     elif p[1] == '<':
         print("relation <")
     elif p[1] == '>':
@@ -213,4 +213,4 @@ def p_error(p):
         print(f"Error: {p.lineno}: Parser: cerca de '{p.value}'")
 
 
-parser = yacc.yacc('SLR')
+parser = yacc.yacc()
