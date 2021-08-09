@@ -2,6 +2,15 @@ from os import read
 from sys import argv
 from parser import parser
 
+###########################
+#  _____   _    _  _   _  #
+# |  __ \ | |  | || \ | | #
+# | |__) || |  | ||  \| | #
+# |  _  / | |  | || . ` | #
+# | | \ \ | |__| || |\  | #
+# |_|  \_\ \____/ |_| \_| #
+###########################
+
 file_name = argv[1]
 try:
     with open(file_name, 'r') as reader:

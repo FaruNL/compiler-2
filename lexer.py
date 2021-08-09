@@ -27,10 +27,10 @@ reserved = {
     'const': 'CONST',
     'var': 'VAR',
     'procedure': 'PROCEDURE',
-    'odd': 'ODD',
-    'out': 'OUT',
-    'in': 'IN',
-    'else': 'ELSE'
+    'odd': 'ODD'  # ,
+    # 'out': 'OUT',
+    # 'in': 'IN',
+    # 'else': 'ELSE'
 }
 
 tokens = [
@@ -65,7 +65,7 @@ t_MINUS = r'\-'
 t_TIMES = r'\*'
 t_DIVIDE = r'\/'
 t_ASSIGN = r'='
-t_NE = r'!='
+t_NE = r'<>'
 t_LT = r'<'
 t_LTE = r'<='
 t_GT = r'>'

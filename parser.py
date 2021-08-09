@@ -27,7 +27,7 @@ precedence = (
 
 
 def p_program(p):
-    '''program : block'''
+    '''program : block DOT'''
     p[0] = Node('program', p[1])
     print("program")
 
