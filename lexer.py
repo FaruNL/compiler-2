@@ -22,20 +22,20 @@ valid = True
 #--------#
 
 reserved = {
-    'begin' : 'BEGIN',
-    'end' : 'END',
-    'if' : 'IF',
-    'then' : 'THEN',
-    'while' : 'WHILE',
-    'do' : 'DO',
-    'call' : 'CALL',
-    'const' : 'CONST',
-    'int' : 'INT',
-    'procedure' : 'PROCEDURE',
-    'odd' : 'ODD',
-    'out' : 'OUT',
-    'in' : 'IN',
-    'else' : 'ELSE'
+    'begin': 'BEGIN',
+    'end': 'END',
+    'if': 'IF',
+    'then': 'THEN',
+    'while': 'WHILE',
+    'do': 'DO',
+    'call': 'CALL',
+    'const': 'CONST',
+    'var': 'VAR',
+    'procedure': 'PROCEDURE',
+    'odd': 'ODD',
+    'out': 'OUT',
+    'in': 'IN',
+    'else': 'ELSE'
 }
 
 tokens = [
@@ -82,12 +82,14 @@ t_SEMI = r';'
 t_DOT = r'\.'
 t_UPDATE = r':='
 
+
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
-    if t.value.upper() in reserved:
+    if t.value.upper() in reserved.values():
         t.value = t.value.upper()
         t.type = t.value
     return t
+
 
 def t_NUMBER(t):
     r'[0-9]+'
@@ -103,20 +105,24 @@ def t_NUMBER(t):
 # OMISSIONS #
 #-----------#
 
+
 def t_SINGLE_LINE_COMMENT(t):
-    r'//.*'
+    r'\#.*'
     pass
+
 
 def t_MULTI_LINE_COMMENT(t):
     r'\/\*(.|\n)*?\*\/'
     t.lexer.lineno += len(findall("\n", t.value))
     pass
 
+
 t_ignore = ' \t'
 
 #--------#
 # OTHERS #
 #--------#
+
 
 def t_newline(t):
     r'\n+'
@@ -126,10 +132,12 @@ def t_newline(t):
 # ERROR HANDLING #
 #----------------#
 
+
 def t_error(t):
     print(f"ERROR: Caracter inválido '{t.value[0]}', LINEA: {t.lexer.lineno}")
     valid = False
     t.lexer.skip(1)
+
 
 #-----#
 # USE #
@@ -137,5 +145,5 @@ def t_error(t):
 lexer = lex.lex()
 lexer.input(file_contents)
 
-for tok in lexer:
-    print(tok)
+# for tok in lexer:
+#     print(tok)
