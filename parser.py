@@ -154,22 +154,22 @@ def p_relation(p):
                 | LTE
                 | GTE'''
     if p[1] == '=':
-        p[0] = s.Relation('relation_=', [], [p[1]])
+        p[0] = s.Relation('relation_=', [], p[1])
         print("relation [=]")
     elif p[1] == '<>':
-        p[0] = s.Relation('relation_<>', [], [p[1]])
+        p[0] = s.Relation('relation_<>', [], p[1])
         print("relation [<>]")
     elif p[1] == '<':
-        p[0] = s.Relation('relation_<', [], [p[1]])
+        p[0] = s.Relation('relation_<', [], p[1])
         print("relation [<]")
     elif p[1] == '>':
-        p[0] = s.Relation('relation_>', [], [p[1]])
+        p[0] = s.Relation('relation_>', [], p[1])
         print("relation [>]")
     elif p[1] == '<=':
-        p[0] = s.Relation('relation_<=', [], [p[1]])
+        p[0] = s.Relation('relation_<=', [], p[1])
         print("relation [<=]")
     else:
-        p[0] = s.Relation('relation_>=', [], [p[1]])
+        p[0] = s.Relation('relation_>=', [], p[1])
         print("relation [>=]")
 
 
@@ -223,7 +223,7 @@ def p_multiplyingOperator(p):
 
 def p_factor_ID(p):
     '''factor : ID'''
-    p[0] = s.Id('id', [], [p[1]])
+    p[0] = s.Id('id', [], p[1])
     print(f"factor: [{p[1]}]")
 
 
