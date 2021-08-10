@@ -1,6 +1,6 @@
 import ply.yacc as yacc
 from lexer import tokens
-from semantic import IdentList, Node
+import semantic as s
 
 ###################################################
 #  _____          _____    _____  ______  _____   #
@@ -28,13 +28,13 @@ precedence = (
 
 def p_program(p):
     '''program : block DOT'''
-    p[0] = Node('program', [p[1]])
+    p[0] = s.Program('program', [p[1]])
     print("program .")
 
 
 def p_block(p):
     '''block : constDecl varDecl procDecl statement'''
-    p[0] = Node('block', [p[1], p[2], p[3], p[4]])
+    p[0] = s.Block('block', [p[1], p[2], p[3], p[4]])
     print(f"block")
 
 
@@ -42,10 +42,10 @@ def p_constDecl(p):
     '''constDecl : CONST constAssignmentList SEMI
                  | empty'''
     if len(p) == 4:
-        p[0] = Node('constDecl', [p[2]])
+        p[0] = s.ConstDecl('constDecl', [p[2]])
         print(f"constDecl: [CONST constAssignmentList SEMI]")
     else:
-        p[0] = Node('constDecl_null', [], 'empty')
+        p[0] = s.ConstDecl('constDecl_null', [], 'empty')
         print("constDecl_nulo")
     # print "constDecl"
 
@@ -54,10 +54,10 @@ def p_constAssignmentList(p):
     '''constAssignmentList : ID ASSIGN NUMBER
                            | constAssignmentList COMMA ID ASSIGN NUMBER'''
     if len(p) == 4:
-        p[0] = Node('constAssignmentList', [], [p[1], p[3]])
+        p[0] = s.ConstAssignmentList('constAssignmentList', [], [p[1], p[3]])
         print(f"constAssignmentList: [{p[1]} = {p[3]}]")
     else:
-        p[0] = Node('constAssignmentList', [p[1]], [p[3], p[5]])
+        p[0] = s.ConstAssignmentList('constAssignmentList', [p[1]], [p[3], p[5]])
         print(f"constAssignmentList: [constAssignmentList , {p[3]} := {p[5]}]")
 
 
@@ -65,10 +65,10 @@ def p_varDecl(p):
     '''varDecl : VAR identList SEMI
                | empty'''
     if len(p) == 4:
-        p[0] = Node('varDecl', [p[2]])
+        p[0] = s.VarDecl('varDecl', [p[2]])
         print("varDecl: [VAR identList ;]")
     else:
-        p[0] = Node('varDecl_null', [], 'empty')
+        p[0] = s.VarDecl('varDecl_null', [], 'empty')
         print("varDecl_nulo")
 
 
@@ -76,10 +76,10 @@ def p_identList(p):
     '''identList : ID
                  | identList COMMA ID'''
     if len(p) == 2:
-        p[0] = IdentList('identList', [], p[1])
+        p[0] = s.IdentList('identList', [], p[1])
         print(f"identList: [{p[1]}]")
     else:
-        p[0] = IdentList('identList', [p[1]], p[3])
+        p[0] = s.IdentList('identList', [p[1]], p[3])
         print(f"identList: [identList , {p[3]}]")
 
 
@@ -87,10 +87,10 @@ def p_procDecl(p):
     '''procDecl : procDecl PROCEDURE ID SEMI block SEMI
                 | empty'''
     if len(p) == 7:
-        p[0] = Node('procDecl', [p[1], p[5]], p[3])
+        p[0] = s.ProcDecl('procDecl', [p[1], p[5]], p[3])
         print(f"procDecl: [procDecl PROCEDURE {p[3]} ; block ;]")
     else:
-        p[0] = Node('procDecl_null', [], 'empty')
+        p[0] = s.ProcDecl('procDecl_null', [], 'empty')
         print("procDecl_nulo")
 
 
@@ -103,24 +103,24 @@ def p_statement(p):
                  | empty'''
     if len(p) == 4:
         if p[2] == ':=':
-            p[0] = Node('statement1', [p[3]], p[1])
+            p[0] = s.Statement('statement1', [p[3]], p[1])
             print(f"statement: [{p[1]} := expression]")
         else:
-            p[0] = Node('statement3', [p[2]])
+            p[0] = s.Node('statement3', [p[2]])
             print("statement: [BEGIN statementList END]")
 
     elif len(p) == 5:
         if p[1] == 'IF':
-            p[0] = Node('statement4', [p[2], p[4]])
+            p[0] = s.Node('statement4', [p[2], p[4]])
             print("statement: [IF condition THEN statement]")
         else:
-            p[0] = Node('statement5', [p[2], p[4]])
+            p[0] = s.Node('statement5', [p[2], p[4]])
             print("statement: [WHILE condition DO statement]")
     elif len(p) == 3:
         print(f"statement: [CALL {p[2]}]")
-        p[0] = Node('statement2', [], p[1])
+        p[0] = s.Node('statement2', [], p[1])
     else:
-        p[0] = Node('statement_null', [], 'empty')
+        p[0] = s.Node('statement_null', [], 'empty')
         print("statement_nulo")
 
 
@@ -128,10 +128,10 @@ def p_statementList(p):
     '''statementList : statement
                      | statementList SEMI statement'''
     if len(p) == 2:
-        p[0] = Node('statementList1', [p[1]])
+        p[0] = s.StatementList('statementList1', [p[1]])
         print("statementList: [statement]")
     else:
-        p[0] = Node('statementList2', [p[1], p[3]])
+        p[0] = s.StatementList('statementList2', [p[1], p[3]])
         print("statementList: [statementList ; statement]")
 
 
@@ -139,10 +139,10 @@ def p_condition(p):
     '''condition : ODD expression
                  | expression relation expression'''
     if len(p) == 2:
-        p[0] = Node('condition1', [p[2]])
+        p[0] = s.Condition('condition1', [p[2]])
         print("condition [ODD expression]")
     else:
-        p[0] = Node('condition2', [p[1], p[2], p[3]])
+        p[0] = s.Condition('condition2', [p[1], p[2], p[3]])
         print("condition [expression relation expression]")
 
 
@@ -154,22 +154,22 @@ def p_relation(p):
                 | LTE
                 | GTE'''
     if p[1] == '=':
-        p[0] = Node('relation_=', [], [p[1]])
+        p[0] = s.Relation('relation_=', [], [p[1]])
         print("relation [=]")
     elif p[1] == '<>':
-        p[0] = Node('relation_<>', [], [p[1]])
+        p[0] = s.Relation('relation_<>', [], [p[1]])
         print("relation [<>]")
     elif p[1] == '<':
-        p[0] = Node('relation_<', [], [p[1]])
+        p[0] = s.Relation('relation_<', [], [p[1]])
         print("relation [<]")
     elif p[1] == '>':
-        p[0] = Node('relation_>', [], [p[1]])
+        p[0] = s.Relation('relation_>', [], [p[1]])
         print("relation [>]")
     elif p[1] == '<=':
-        p[0] = Node('relation_<=', [], [p[1]])
+        p[0] = s.Relation('relation_<=', [], [p[1]])
         print("relation [<=]")
     else:
-        p[0] = Node('relation_>=', [], [p[1]])
+        p[0] = s.Relation('relation_>=', [], [p[1]])
         print("relation [>=]")
 
 
@@ -178,24 +178,24 @@ def p_expression(p):
                   | addingOperator term
                   | expression addingOperator term'''
     if len(p) == 2:
-        print("expresion [term]")
-        p[0] = Node('expresion1', [p[1]])
+        print("expression [term]")
+        p[0] = s.Expression('expression1', [p[1]])
     elif len(p) == 3:
-        p[0] = Node('expresion2', [p[1], p[2]])
-        print("expresion [addingOperator term]")
+        p[0] = s.Expression('expression2', [p[1], p[2]])
+        print("expression [addingOperator term]")
     else:
-        p[0] = Node('expresion3', [p[1], p[2], p[3]])
-        print("expresion [expression addingOperator term]")
+        p[0] = s.Expression('expression3', [p[1], p[2], p[3]])
+        print("expression [expression addingOperator term]")
 
 
 def p_addingOperator(p):
     '''addingOperator : PLUS
                       | MINUS'''
     if p[1] == '+':
-        p[0] = Node('operator_plus', [], [p[1]])
+        p[0] = s.AddingOperator('operator_plus', [], [p[1]])
         print("addingOperator [+]")
     else:
-        p[0] = Node('operator_minus', [], [p[1]])
+        p[0] = s.AddingOperator('operator_minus', [], [p[1]])
         print("addingOperator [-]")
 
 
@@ -203,10 +203,10 @@ def p_term(p):
     '''term : factor
             | term multiplyingOperator factor'''
     if len(p) == 2:
-        p[0] = Node('term1', [p[1]])
+        p[0] = s.Term('term1', [p[1]])
         print("term [factor]")
     else:
-        p[0] = Node('term2', [p[1], p[2], p[3]])
+        p[0] = s.Term('term2', [p[1], p[2], p[3]])
         print("term [term multiplyingOperator factor]")
 
 
@@ -214,28 +214,28 @@ def p_multiplyingOperator(p):
     '''multiplyingOperator : TIMES
                            | DIVIDE'''
     if p[1] == '*':
-        p[0] = Node('operator_times', [], [p[1]])
+        p[0] = s.MultiplyingOperator('operator_times', [], [p[1]])
         print("multiplyingOperator [*]")
     else:
-        p[0] = Node('operator_divide', [], [p[1]])
+        p[0] = s.MultiplyingOperator('operator_divide', [], [p[1]])
         print("multiplyingOperator [/]")
 
 
 def p_factor_ID(p):
     '''factor : ID'''
-    p[0] = Node('id', [], [p[1]])
+    p[0] = s.Id('id', [], [p[1]])
     print(f"factor: [{p[1]}]")
 
 
 def p_factor_NUMBER(p):
     '''factor : NUMBER'''
-    p[0] = Node('number', [], p[1])
+    p[0] = s.Number('number', [], p[1])
     print(f"factor: [{p[1]}]")
 
 
 def p_factor_GROUP(p):
     '''factor : LPAREN expression RPAREN'''
-    p[0] = Node('group_expression', [p[2]])
+    p[0] = s.Group('group_expression', [p[2]])
     print("factor [( expression )]")
 
 
