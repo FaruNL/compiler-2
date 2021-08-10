@@ -138,7 +138,7 @@ def p_statementList(p):
 def p_condition(p):
     '''condition : ODD expression
                  | expression relation expression'''
-    if len(p) == 2:
+    if len(p) == 3:
         p[0] = s.Condition('condition1', [p[2]])
         print("condition [ODD expression]")
     else:
