@@ -1,3 +1,5 @@
+variables = {}
+
 class Node(object):
     def __init__(self, type, children=None, leaf=None):
         self.type = type
@@ -7,8 +9,8 @@ class Node(object):
             self.children = []
         self.leaf = leaf
 
-    def __str__(self):
-        return self.traverse(1)
+    # def __str__(self):
+    #     return self.traverse(1)
 
     def traverse(self, i):
         s = self.type
@@ -22,3 +24,22 @@ class Node(object):
         for children in self.children:
             s += indent + children.traverse(i+1)
         return s
+
+class Program(Node):
+    def __init__(self, type, children=None, leaf=None):
+        super().__init__(type, children=children, leaf=leaf)
+
+# class ConstAssignmentList(Node):
+#     def __init__(self, type, children=None, leaf=None):
+#         super().__init__(type, children=children, leaf=leaf)
+
+class IdentList(Node):
+    def __init__(self, type, children=None, leaf=None):
+        super().__init__(type, children=children, leaf=leaf)
+        self.__get_id()
+
+    def __get_id(self):
+        if self.leaf in variables.keys():
+            print(f"Variable '{self.leaf}' already exits")
+            exit(1)
+        variables[self.leaf] = None

@@ -10,8 +10,6 @@ from re import findall
 # |______||______|/_/ \_\|______||_|  \_\ #
 ###########################################
 
-valid = True
-
 #--------#
 # TOKENS #
 #--------#
@@ -130,8 +128,7 @@ def t_newline(t):
 
 def t_error(t):
     print(f"ERROR: Caracter inválido '{t.value[0]}', LINEA: {t.lexer.lineno}")
-    valid = False
-    t.lexer.skip(1)
+    exit(1)
 
 
 #-----#

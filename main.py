@@ -1,6 +1,7 @@
 from os import read
 from sys import argv
 from parser import parser
+from semantic import variables
 
 ###########################
 #  _____   _    _  _   _  #
@@ -23,3 +24,5 @@ except FileNotFoundError as err:
 
 else:
     reader.close()
+
+print(variables)

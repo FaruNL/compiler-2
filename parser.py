@@ -1,6 +1,6 @@
 import ply.yacc as yacc
 from lexer import tokens
-from semantic import Node
+from semantic import IdentList, Node
 
 ###################################################
 #  _____          _____    _____  ______  _____   #
@@ -54,10 +54,10 @@ def p_constAssignmentList(p):
     '''constAssignmentList : ID ASSIGN NUMBER
                            | constAssignmentList COMMA ID ASSIGN NUMBER'''
     if len(p) == 4:
-        p[0] = Node('constAssignmentList', [p[3]], p[1])
+        p[0] = Node('constAssignmentList', [], [p[1], p[3]])
         print(f"constAssignmentList: [{p[1]} = {p[3]}]")
     else:
-        p[0] = Node('constAssignmentList', [p[1], p[5]], p[3])
+        p[0] = Node('constAssignmentList', [p[1]], [p[3], p[5]])
         print(f"constAssignmentList: [constAssignmentList , {p[3]} := {p[5]}]")
 
 
@@ -76,10 +76,10 @@ def p_identList(p):
     '''identList : ID
                  | identList COMMA ID'''
     if len(p) == 2:
-        p[0] = Node('identList', [], p[1])
+        p[0] = IdentList('identList', [], p[1])
         print(f"identList: [{p[1]}]")
     else:
-        p[0] = Node('identList', [p[1]], p[3])
+        p[0] = IdentList('identList', [p[1]], p[3])
         print(f"identList: [identList , {p[3]}]")
 
 
@@ -247,8 +247,10 @@ def p_empty(p):
 def p_error(p):
     if p == None:
         print('Syntax error at last token')
+        exit(1)
     else:
-        print(f"Syntax error around line number \n {p.lineno} : {p.value}")
+        print(f"Syntax error around line number {p.lineno} : '{p.value}'")
+        exit(1)
 
 
 parser = yacc.yacc()
