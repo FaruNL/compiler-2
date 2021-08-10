@@ -1,8 +1,6 @@
-var x, y;
+var x;
 begin
-   x:=1;
-   y:=2;
-   y:=x+y;
+   x:=1
 end.
 
 /*PROCEDURE divide;
