@@ -192,10 +192,10 @@ def p_addingOperator(p):
     '''addingOperator : PLUS
                       | MINUS'''
     if p[1] == '+':
-        p[0] = s.AddingOperator('operator_plus', [], [p[1]])
+        p[0] = s.AddingOperator('operator_plus', [], p[1])
         print("addingOperator [+]")
     else:
-        p[0] = s.AddingOperator('operator_minus', [], [p[1]])
+        p[0] = s.AddingOperator('operator_minus', [], p[1])
         print("addingOperator [-]")
 
 
@@ -214,10 +214,10 @@ def p_multiplyingOperator(p):
     '''multiplyingOperator : TIMES
                            | DIVIDE'''
     if p[1] == '*':
-        p[0] = s.MultiplyingOperator('operator_times', [], [p[1]])
+        p[0] = s.MultiplyingOperator('operator_times', [], p[1])
         print("multiplyingOperator [*]")
     else:
-        p[0] = s.MultiplyingOperator('operator_divide', [], [p[1]])
+        p[0] = s.MultiplyingOperator('operator_divide', [], p[1])
         print("multiplyingOperator [/]")
 
 
