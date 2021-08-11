@@ -6,7 +6,7 @@
 
 ![Diagram](docs/PL_0%20-%20Flow.png)
 
-### ENF
+### BNF
 
 ```
 <program> ::= <block> .
@@ -65,6 +65,57 @@
           | <number>
           | ( <expression> )
 ```
+
+> Notes.
+>
+> 1. `e` denotes the empty string.
+> 2. `<ident>` and `<number>`  are  tokens  representing  identifiers  and  numbers, respectively.
+
+### EBNF
+
+```
+<program> ::= <block> .
+
+<block> ::= <const-decl> <var-decl> <proc-decl> <statement>
+
+<const-decl> ::= [const <ident> = <number> {, <ident> = <number>} ;]
+
+<var-decl> ::= [var <ident> {, <ident>} ;]
+
+<proc-decl> ::= {procedure <ident> ; <block> ;}
+
+<statement> ::= <ident> := <expression>
+             | call <ident>
+             | begin <statement> {; <statement>} end
+             | if <condition> then <statement>
+             | while <condition> do <statement>
+             | e
+
+<condition> ::= odd <expression>
+             | <expression> <relation> <expression>
+
+<relation> ::= =
+            | <>
+            | <
+            | >
+            | <=
+            | >=
+
+<expression> ::= [<adding-operator>] <term> {<adding-operator> <term>}
+
+<adding-operator> ::= +
+                   | -
+
+<term> ::= <factor> {<multiplying-operator> <factor>}
+
+<multiplying-operator> ::= *
+                        | /
+
+<factor> ::= <ident>
+          | <number>
+          | ( <expression> )
+```
+
 > Notes.
 >
 > 1. `e` denotes the empty string.
