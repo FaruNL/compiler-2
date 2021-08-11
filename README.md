@@ -1,4 +1,23 @@
-# PL/0 (1976) Compiler
+<p align="center">
+    <h1 align="center">PL/0 compiler</h1>
+    <p align="center"> PL/0 is a programming language, intended as an educational programming language, that is similar to but much simpler than Pascal.</p>
+    <p align="center">It was originally introduced in the book <em>Algorithms + Data Structures = Programs</em> by Niklaus Wirth in 1976.</p>
+</p>
+<p align="center">
+    <a href="#"><img src="https://img.shields.io/badge/licence-MIT-yellowgreen?style=for-the-badge" alt="Licence MIT" /></a>
+    <a href="https://www.python.org/downloads/release/python-396/"><img src="https://img.shields.io/badge/python-3.9.6-blue?style=for-the-badge&logo=python" alt="Python" /></a>
+    <a href="https://docs.conda.io/en/latest/miniconda.html"><img src="https://img.shields.io/badge/miniconda-4.10.3-blue?style=for-the-badge&logo=anaconda" alt="Miniconda" /></a>
+    <a href="https://ply.readthedocs.io/en/latest/index.html"><img src="https://img.shields.io/badge/ply-3.11-blue?style=for-the-badge" alt="PLY" /></a>
+</p>
+
+<h2>Table of contents</h2>
+
+- [Grammar](#grammar)
+  - [Diagram](#diagram)
+  - [BNF](#bnf)
+  - [EBNF](#ebnf)
+- [Code examples](#code-examples)
+- [References](#references)
 
 ## Grammar
 
@@ -176,4 +195,9 @@ BEGIN
     x := 84; y := 36; CALL gcd
 END.
 ```
+## References
 
+- [CS485 Project - PL/0 Compiler](https://cs.wmich.edu/~yang/teach/cs485/pl0/)
+- [Github repository](https://github.com/dila93/Compilador_PL0)
+- [Presentation](https://www.slideserve.com/moke/pl-0-parser-powerpoint-ppt-presentation)
+- [Node implementation](https://web.archive.org/web/20200125143809/http://www.cs.columbia.edu:80/~aho/cs4115/Lectures/MineTimeFinalReport.pdf)
