@@ -1,158 +1,128 @@
-# PL/0 Compiler (Modified)
+# PL/0 (1976) Compiler
 
 ## Grammar
 
-### BNF
+### Diagram
 
-```bnf
+![Diagram](docs/PL_0%20-%20Flow.png)
+
+### ENF
+
+```
 <program> ::= <block> .
 
 <block> ::= <const-decl> <var-decl> <proc-decl> <statement>
 
-<const-decl> ::= const <const-assignment-list> ; | e
+<const-decl> ::= CONST <const-assignment-list> ;
+              | e
 
 <const-assignment-list> ::= <ident> = <number>
-            | <const-assignment-list> , <ident> = <number>
+                         | <const-assignment-list> , <ident> = <number>
 
-<var-decl> ::= var <ident-list> ; | e
-
-<ident-list> ::= <ident> | <ident-list> , <ident>
-
-<proc-decl> ::= <proc-decl> procedure <ident> ; <block> ; | e
-
-<statement> ::= <ident> := <expression>
-            | call <ident>
-            | begin <statement-list> end
-            | if <condition> then <statement>
-            | while <condition> do <statement>
+<var-decl> ::= var <ident-list> ;
             | e
 
-<statement-list> ::= <statement> | <statement-list> ; <statement>
+<ident-list> ::= <ident>
+              | <ident-list> , <ident>
 
-<condition> ::= odd <expression> | <expression> <relation> <expression>
-
-<relation> ::= = | <> | < | > | <= | >=
-
-<expression> ::= <term> | <adding-operator> <term>
-            | <expression> <adding-operator> <term>
-
-<adding-operator> ::= + | -
-
-<term> ::= <factor> | <term> <multiplying-operator> <factor>
-
-<multiplying-operator> ::= * | /
-
-<factor> ::= <ident> | <number> | ( <expression> )
-```
-> **Notes**
->
-> 1. `e` denotes the empty string.
-> 2. `<ident>` and `<number>`  are  tokens  representing  identifiers  and  numbers, respectively.
-
-### EBNF
-
-```bnf
-<program> ::= <block> .
-
-<block> ::= <const-decl> <var-decl> <proc-decl> <statement>
-
-<const-decl> ::= [const <ident> = <number> {, <ident> = <number>} ;]
-
-<var-decl> ::= [var <ident> {, <ident>} ;]
-
-<proc-decl> ::= {procedure <ident> ; <block> ;}
+<proc-decl> ::= <proc-decl> PROCEDURE <ident> ; <block> ;
+             | e
 
 <statement> ::= <ident> := <expression>
-            | call <ident>
-            | begin <statement> {; <statement>} end
-            | if <condition> then <statement>
-            | while <condition> do <statement>
+            | CALL <ident>
+            | BEGIN <statement-list> END
+            | IF <condition> THEN <statement>
+            | WHILE <condition> DO <statement>
             | e
 
-<condition> ::= odd <expression> | <expression> <relation> <expression>
+<statement-list> ::= <statement>
+                  | <statement-list> ; <statement>
 
-<relation> ::= = | <> | < | > | <= | >=
+<condition> ::= odd <expression>
+             | <expression> <relation> <expression>
 
-<expression> ::= [<adding-operator>] <term> {<adding-operator> <term>}
+<relation> ::= =
+            | <>
+            | <
+            | >
+            | <=
+            | >=
 
-<adding-operator> ::= + | -
+<expression> ::= <term>
+              | <adding-operator> <term>
+              | <expression> <adding-operator> <term>
 
-<term> ::= <factor> {<multiplying-operator> <factor>}
+<adding-operator> ::= +
+                   | -
 
-<multiplying-operator> ::= * | /
+<term> ::= <factor>
+        | <term> <multiplying-operator> <factor>
 
-<factor> ::= <ident> | <number> | ( <expression> )
+<multiplying-operator> ::= *
+                        | /
+
+<factor> ::= <ident>
+          | <number>
+          | ( <expression> )
 ```
 > Notes.
 >
-> 1. Optional constructions are enclosed in square brackets `[]`.
-> 2. Constructs repeated zero or more times are enclosed in curly brackets `{}`.
+> 1. `e` denotes the empty string.
+> 2. `<ident>` and `<number>`  are  tokens  representing  identifiers  and  numbers, respectively.
+> 3. Optional constructions are enclosed in square brackets `[]`.
+> 4. Constructs repeated zero or more times are enclosed in curly brackets `{}`.
 
 ## Code examples
 
-```pl
-var x, y;
-begin
+```
+VAR x, y;
+BEGIN
    x:=1;
    y:=2;
-   y:=x+y;
-end.
-```
-```pl
-const i = 10; var x, y;
-procedure p;
-   var i, j;
-   begin
-      i := 5;
-      x := 4 * i
-   end;
-begin
-   x := i;
-   call p;
-   y := x * i
-end.
+   y:=x+y
+END.
 ```
 
-```pl
-const m=7,n=85;
-var x,y,z,q,r;
-procedure multiply;
-   var a,b;
-   begin a:=x; b:=y; z:=0;
-      while b>0 do
-      begin
-         if odd b then z:=z+a;
-          a:=2*a; b:=b/2;
-      end
-   end;
-procedure divide;
-   var w;
-   begin r:=x; q:=0; w:=y;
-      while w <= r do w:=2*w;
-      while w > y do
-      begin
-         q:=2*q; w:=w/2;
-         if w <= r then
-         begin
-            r:=r-w; q:=q+1
-         end
-      end
-   end;
-procedure gcd;
-   var f,g;
-   begin f:=x; g:=y;
-   while f<>g do
-      begin
-         if f<g then g:=g-f;
-         if g<f then f:=f-g;
-      end;
-   z:=f
-   end;
+```
+CONST m = 7, n = 85;
+VAR x, y, z, q, r;
 
-begin
-   x:=m; y:=n; call multiply;
-   x:=25; y:=3; call divide;
-   x:=84; y:=36; call gcd
-end.
+PROCEDURE multiply;
+    VAR a, b;
+BEGIN a := x; b := y; z := 0;
+    WHILE b > 0 DO
+    BEGIN
+        IF ODD b THEN z := z + a;
+        a := 2 * a; b := b / 2;
+    END
+END;
+
+PROCEDURE divide;
+    VAR w;
+BEGIN r := x; q := 0; w := y;
+    WHILE w <= r DO  w := 2 * w;
+    WHILE w > y DO
+        BEGIN  q := 2 * q; w := w / 2;
+            IF w <= r THEN
+            BEGIN r := r - w; q := q + 1
+            END
+        END
+END;
+
+PROCEDURE gcd;
+    VAR f, g;
+BEGIN f := x; g := y;
+    WHILE f <> g DO
+        BEGIN IF f < g THEN g := g - f;
+            IF g < f THEN f := f - g;
+        END;
+    z := f
+END;
+
+BEGIN
+    x :=  m; y :=  n; CALL multiply;
+    x := 25; y :=  3; CALL divide;
+    x := 84; y := 36; CALL gcd
+END.
 ```
 
