@@ -4,7 +4,7 @@
     <p align="center">It was originally introduced in the book <em>Algorithms + Data Structures = Programs</em> by Niklaus Wirth in 1976.</p>
 </p>
 <p align="center">
-    <a href="#"><img src="https://img.shields.io/badge/licence-MIT-yellowgreen?style=for-the-badge" alt="Licence MIT" /></a>
+    <a href="#"><img src="https://img.shields.io/badge/licence-WTFPL-yellowgreen?style=for-the-badge" alt="WTFPL License" /></a>
     <a href="https://www.python.org/downloads/release/python-396/"><img src="https://img.shields.io/badge/python-3.9.6-blue?style=for-the-badge&logo=python" alt="Python" /></a>
     <a href="https://docs.conda.io/en/latest/miniconda.html"><img src="https://img.shields.io/badge/miniconda-4.10.3-blue?style=for-the-badge&logo=anaconda" alt="Miniconda" /></a>
     <a href="https://ply.readthedocs.io/en/latest/index.html"><img src="https://img.shields.io/badge/ply-3.11-blue?style=for-the-badge" alt="PLY" /></a>
@@ -19,6 +19,8 @@
   - [BNF](#bnf)
   - [EBNF](#ebnf)
 - [Code examples](#code-examples)
+- [Development enviroment](#development-enviroment)
+  - [Commands](#commands)
 - [References](#references)
 
 ## Features
@@ -104,7 +106,7 @@
           | ( <expression> )
 ```
 
-> Notes.
+> :pushpin: Notes
 >
 > 1. `e` denotes the empty string.
 > 2. `<ident>` and `<number>`  are  tokens  representing  identifiers  and  numbers, respectively.
@@ -154,7 +156,7 @@
           | ( <expression> )
 ```
 
-> Notes.
+> :pushpin: Notes
 >
 > 1. `e` denotes the empty string.
 > 2. `<ident>` and `<number>`  are  tokens  representing  identifiers  and  numbers, respectively.
@@ -214,6 +216,38 @@ BEGIN
     x := 84; y := 36; CALL gcd
 END.
 ```
+
+## Development enviroment
+
+### Commands
+
+1. Create a new conda enviroment from a list of specified packages
+
+    ```bash
+    # Command estructure
+    conda create --name {env_name} python=3.9.6 ply=3.11
+    
+    # After creating the enviroment you can install autopep8 for     your IDE
+    conda install --name {env_name} autopep8 -y
+    ```
+    > :pushpin: Notes
+    > 
+    > Replace `{env_name}` for whatever name you want.
+
+2. Activate the enviroment
+
+    ```bash
+    # In the terminal for MacOS / Linux
+    # In Anaconda Prompt for Windows
+    conda activate {env_name}
+    ```
+    > :pushpin: Notes
+    > 
+    > Replace `{env_name}` for whatever name you want.
+
+    Or choose the conda enviroment from your favorite IDE
+
+
 ## References
 
 - [CS485 Project - PL/0 Compiler](https://cs.wmich.edu/~yang/teach/cs485/pl0/)
