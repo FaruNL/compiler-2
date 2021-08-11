@@ -12,12 +12,31 @@
 
 <h2>Table of contents</h2>
 
+- [Features](#features)
+- [To do](#to-do)
 - [Grammar](#grammar)
   - [Diagram](#diagram)
   - [BNF](#bnf)
   - [EBNF](#ebnf)
 - [Code examples](#code-examples)
 - [References](#references)
+
+## Features
+
+- [x] Lexer.
+- [x] Parser (Grammar rules).
+- [x] AST generation (Nodes)
+- [x] Variable declaration detection.
+
+## To do
+
+- [ ] Generation of symbol and address table.
+- [ ] Generation of error table.
+- [ ] Value assignments to variables.
+- [ ] CALL procedures
+- [ ] ODD operation
+- [ ] IF statements
+- [ ] WHILE staments
 
 ## Grammar
 
