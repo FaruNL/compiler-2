@@ -227,7 +227,7 @@ END.
     # Command estructure
     conda create --name {env_name} python=3.9.6 ply=3.11
     
-    # After creating the enviroment you can install autopep8 for     your IDE
+    # After creating the enviroment you can install autopep8 for your IDE
     conda install --name {env_name} autopep8 -y
     ```
     > :pushpin: Notes
