@@ -14,7 +14,7 @@ BEGIN a := x; b := y; z := 0;
     WHILE b > 0 DO
     BEGIN
         IF ODD b THEN z := z + a;
-        a := 2 * a; b := b / 2;
+        a := 2 * a; b := b / 2
     END
 END;
 
@@ -35,7 +35,7 @@ PROCEDURE gcd;
 BEGIN f := x; g := y;
     WHILE f <> g DO
         BEGIN IF f < g THEN g := g - f;
-            IF g < f THEN f := f - g;
+            IF g < f THEN f := f - g
         END;
     z := f
 END;
