@@ -118,7 +118,7 @@ def p_statement(p):
             print("statement: [WHILE condition DO statement]")
     elif len(p) == 3:
         print(f"statement: [CALL {p[2]}]")
-        p[0] = s.Node('statement2', [], p[1])
+        p[0] = s.Node('statement2', [], p[2])
     else:
         p[0] = s.Node('statement_null', [], 'empty')
         print("statement_nulo")
@@ -229,7 +229,7 @@ def p_factor_ID(p):
 
 def p_factor_NUMBER(p):
     '''factor : NUMBER'''
-    p[0] = s.Number('number', [], p[1])
+    p[0] = s.Number('number', [], int(p[1]))
     print(f"factor: [{p[1]}]")
 
 

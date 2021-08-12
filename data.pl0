@@ -1,11 +1,10 @@
-/*var x, y, x;
-begin
-   x:=1*2;
-   y:=1;
-   #y:=x+y
-end.*/
+CONST m = 1;
+VAR x;
+BEGIN
+   x := 1 + 2
+END.
 
-CONST m = 7, n = 85;
+/*CONST m = 7, n = 85;
 VAR x, y, z, q, r;
 
 PROCEDURE multiply;
@@ -44,4 +43,4 @@ BEGIN
     x :=  m; y :=  n; CALL multiply;
     x := 25; y :=  3; CALL divide;
     x := 84; y := 36; CALL gcd
-END.
+END.*/
