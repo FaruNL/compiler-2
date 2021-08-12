@@ -1,4 +1,5 @@
 variables = {}
+const = {}
 
 
 class Node(object):
@@ -45,6 +46,12 @@ class ConstDecl(Node):
 class ConstAssignmentList(Node):
     def __init__(self, type, children=None, leaf=None):
         super().__init__(type, children=children, leaf=leaf)
+        self.__get_const()
+
+    def __get_const(self):
+        if self.leaf[0] in const.keys():
+            print(f"Constant '{self.leaf[0]}' already exits")
+            exit(1)
 
 
 class VarDecl(Node):
