@@ -18,15 +18,14 @@ class Node(object):
         s = self.type
         indent = "\n" + i*' |'
         if self.leaf != None:
-            if isinstance(self.leaf, Node):
-                print("Node")
-                s += indent + self.leaf.__traverse_tree(i+1)
-            else:
-                s += indent + str(self.leaf)
+            s += indent + str(self.leaf)
         for children in self.children:
             s += indent + children.__traverse_tree(i+1)
         return s
 
+class Terminal(Node):
+    def __init__(self, type, children=None, leaf=None):
+        super().__init__(type, children=children, leaf=leaf)
 
 class Program(Node):
     def __init__(self, type, children=None, leaf=None):
