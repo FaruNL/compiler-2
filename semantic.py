@@ -1,5 +1,6 @@
 sym_table = {}
 
+
 class Node(object):
     def __init__(self, type, children=None, leaf=None):
         self.type = type
@@ -20,7 +21,7 @@ class Node(object):
         for children in self.children:
             s += indent + children.__traverse_tree(i+1)
         return s
-    
+
     def traverse(self):
         child = None
         if self.leaf != None:
@@ -61,8 +62,6 @@ class ConstAssignmentList(Node):
             print(f"Constant '{id}' already exits")
             exit(1)
         sym_table[id] = 'CONST'
-        
-
 
 
 class VarDecl(Node):
@@ -74,7 +73,7 @@ class IdentList(Node):
     def __init__(self, type, children=None, leaf=None):
         super().__init__(type, children=children, leaf=leaf)
         self.__check()
-    
+
     def __check(self):
         id = self.leaf
         if id in sym_table.keys():
@@ -87,7 +86,7 @@ class ProcDecl(Node):
     def __init__(self, type, children=None, leaf=None):
         super().__init__(type, children=children, leaf=leaf)
         self.__check()
-    
+
     def __check(self):
         id = self.leaf
         if len(self.children) == 2:
@@ -102,7 +101,7 @@ class Statement(Node):
     def __init__(self, type, children=None, leaf=None):
         super().__init__(type, children=children, leaf=leaf)
         self.__check()
-    
+
     def __check(self):
         if len(self.children) == 1 and self.leaf:
             id = self.leaf
@@ -120,7 +119,8 @@ class Statement(Node):
     def __check_PROC(self, id):
         if id in sym_table.keys():
             if sym_table[id] == 'PROC':
-                print(f"You can't assign something to a procedure identifier: '{id}'")
+                print(
+                    f"You can't assign something to a procedure identifier: '{id}'")
                 exit(1)
 
     def __check_VAR(self, id):
