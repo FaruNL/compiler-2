@@ -1,7 +1,3 @@
-variables = {}
-const = {}
-
-
 class Node(object):
     def __init__(self, type, children=None, leaf=None):
         self.type = type
