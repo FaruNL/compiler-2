@@ -110,7 +110,6 @@ class Statement(Node):
             self.__check_CONST(id)
             self.__check_PROC(id)
             self.__check_VAR(id)
-            self.__chek_expression(expression)
 
     def __check_CONST(self, id):
         if id in sym_table.keys():
