@@ -1,7 +1,9 @@
 CONST m = 1, n = 2;
 VAR x, y;
+PROCEDURE proc1;;
+PROCEDURE proc2;;
 BEGIN
-   x := 1 + 2
+   x := a + 5 + 3 * c
 END.
 
 /*CONST m = 7, n = 85;

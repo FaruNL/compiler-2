@@ -1,5 +1,6 @@
 from sys import argv
 from parser import parser
+from semantic import sym_table
 
 ###########################
 #  _____   _    _  _   _  #
@@ -27,3 +28,5 @@ except FileNotFoundError as err:
 
 else:
     reader.close()
+
+print(sym_table)
