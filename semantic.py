@@ -1,6 +1,4 @@
-variables = {}
-const = {}
-procs = {}
+sym_table = {}
 
 
 class Node(object):
@@ -19,14 +17,23 @@ class Node(object):
         s = self.type
         indent = "\n" + i*' |'
         if self.leaf != None:
-            if isinstance(self.leaf, Node):
-                print("Node")
-                s += indent + self.leaf.__traverse_tree(i+1)
-            else:
-                s += indent + str(self.leaf)
+            s += indent + str(self.leaf)
         for children in self.children:
             s += indent + children.__traverse_tree(i+1)
         return s
+
+    def traverse(self):
+        child = None
+        if self.leaf != None:
+            child = self.leaf
+        for children in self.children:
+            child = children.traverse()
+        return child
+
+
+class Terminal(Node):
+    def __init__(self, type, children=None, leaf=None):
+        super().__init__(type, children=children, leaf=leaf)
 
 
 class Program(Node):
@@ -47,13 +54,14 @@ class ConstDecl(Node):
 class ConstAssignmentList(Node):
     def __init__(self, type, children=None, leaf=None):
         super().__init__(type, children=children, leaf=leaf)
-        self.__get_const()
+        self.__check()
 
-    def __get_const(self):
-        if self.leaf[0] in const.keys():
-            print(f"Constant '{self.leaf[0]}' already exits")
+    def __check(self):
+        id = self.leaf[0]
+        if id in sym_table.keys():
+            print(f"Constant '{id}' already exits")
             exit(1)
-        const[self.leaf[0]] = None
+        sym_table[id] = 'CONST'
 
 
 class VarDecl(Node):
@@ -64,49 +72,67 @@ class VarDecl(Node):
 class IdentList(Node):
     def __init__(self, type, children=None, leaf=None):
         super().__init__(type, children=children, leaf=leaf)
-        self.__get_id()
+        self.__check()
 
-    def __get_id(self):
-        if self.leaf in variables.keys():
-            print(f"Variable '{self.leaf}' already exits")
+    def __check(self):
+        id = self.leaf
+        if id in sym_table.keys():
+            print(f"Variable '{id}' already exits")
             exit(1)
-        variables[self.leaf] = None
+        sym_table[id] = 'VAR'
 
 
 class ProcDecl(Node):
     def __init__(self, type, children=None, leaf=None):
         super().__init__(type, children=children, leaf=leaf)
-        self.__check_procs()
+        self.__check()
 
-    def __check_procs(self):
+    def __check(self):
+        id = self.leaf
         if len(self.children) == 2:
-            if self.leaf in procs.keys():
-                print(f"Procedure '{self.leaf}' already exits")
+
+            if id in sym_table.keys():
+                print(f"Procedure '{id}' is already defined")
                 exit(1)
-            procs[self.leaf] = None
+            sym_table[id] = 'PROC'
 
 
 class Statement(Node):
     def __init__(self, type, children=None, leaf=None):
         super().__init__(type, children=children, leaf=leaf)
-        self.__get_id_value()
+        self.__check()
 
-    def __get_id_value(self):
-        if len(self.children) == 1 and len(self.leaf) == 1:
+    def __check(self):
+        if len(self.children) == 1 and self.leaf:
             id = self.leaf
-            if id in const.keys():
-                print(f"No puedes modificar la constante {id}")
+            expression = self.children[0]
+            self.__check_CONST(id)
+            self.__check_PROC(id)
+            self.__check_VAR(id)
+
+    def __check_CONST(self, id):
+        if id in sym_table.keys():
+            if sym_table[id] == 'CONST':
+                print(f"You can't modify a const: '{id}'")
                 exit(1)
 
-            if not id in variables.keys():
-                print(f" '{id}' no esta declarada")
+    def __check_PROC(self, id):
+        if id in sym_table.keys():
+            if sym_table[id] == 'PROC':
+                print(
+                    f"You can't assign something to a procedure identifier: '{id}'")
                 exit(1)
 
-            # if self.children
-            # valor_der = self.children[0].children[0].children[0].leaf
-            # if not valor_der in variables.keys() and not valor_der in const.keys():
-            #     print(f"{valor_der} no está declarada")
-            #     exit(1)
+    def __check_VAR(self, id):
+        if not id in sym_table.keys():
+            print(f"'{id}' is not declared")
+            exit(1)
+
+    def __chek_expression(self, expression):
+        # if expression.type == '<expression1>':
+        #     print(expression)
+        #     exit(0)
+        pass
 
 
 class StatementList(Node):

@@ -1,5 +1,7 @@
-CONST m = 1;
-VAR x;
+CONST m = 1, n = 2;
+VAR x, y;
+PROCEDURE proc1;;
+PROCEDURE proc2;;
 BEGIN
    x := n
 END.
