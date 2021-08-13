@@ -14,10 +14,7 @@ file_name = argv[1]
 try:
     with open(file_name, 'r') as reader:
         file_contents = reader.read()
-    
-    print('\n~~~~~~~~~~~~~~~~~~~~~~~')
-    print('Nodes order by LALR(1)')
-    print('~~~~~~~~~~~~~~~~~~~~~~~\n')
+
     result = parser.parse(file_contents)
 
     print('\n~~~~~~~~~~~~~~~~~~~~~~~')
