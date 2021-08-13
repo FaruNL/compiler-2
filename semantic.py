@@ -23,9 +23,11 @@ class Node(object):
             s += indent + children.__traverse_tree(i+1)
         return s
 
+
 class Terminal(Node):
     def __init__(self, type, children=None, leaf=None):
         super().__init__(type, children=children, leaf=leaf)
+
 
 class Program(Node):
     def __init__(self, type, children=None, leaf=None):
@@ -65,14 +67,6 @@ class ProcDecl(Node):
 class Statement(Node):
     def __init__(self, type, children=None, leaf=None):
         super().__init__(type, children=children, leaf=leaf)
-        self.__get_id_value()
-
-    def __get_id_value(self):
-        # value = str(self.children[0])
-        # if value.isdigit():
-            # variables[self.leaf] = int(value)
-        # variables[self.leaf] = value
-        pass
 
 
 class StatementList(Node):
