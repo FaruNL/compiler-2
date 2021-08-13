@@ -1,7 +1,7 @@
 from os import read
 from sys import argv
 from parser import parser
-from semantic import variables, const
+from semantic import variables, const, procs
 
 ###########################
 #  _____   _    _  _   _  #
@@ -27,3 +27,4 @@ else:
 
 print(variables)
 print(const)
+print(procs)

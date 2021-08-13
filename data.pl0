@@ -1,7 +1,7 @@
 CONST m = 1;
 VAR x;
 BEGIN
-   x := 1 + 2
+   x := n
 END.
 
 /*CONST m = 7, n = 85;

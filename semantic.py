@@ -1,5 +1,6 @@
 variables = {}
 const = {}
+procs = {}
 
 
 class Node(object):
@@ -52,6 +53,7 @@ class ConstAssignmentList(Node):
         if self.leaf[0] in const.keys():
             print(f"Constant '{self.leaf[0]}' already exits")
             exit(1)
+        const[self.leaf[0]] = None
 
 
 class VarDecl(Node):
@@ -74,6 +76,14 @@ class IdentList(Node):
 class ProcDecl(Node):
     def __init__(self, type, children=None, leaf=None):
         super().__init__(type, children=children, leaf=leaf)
+        self.__check_procs()
+
+    def __check_procs(self):
+        if len(self.children) == 2:
+            if self.leaf in procs.keys():
+                print(f"Procedure '{self.leaf}' already exits")
+                exit(1)
+            procs[self.leaf] = None
 
 
 class Statement(Node):
@@ -82,11 +92,21 @@ class Statement(Node):
         self.__get_id_value()
 
     def __get_id_value(self):
-        # value = str(self.children[0])
-        # if value.isdigit():
-            # variables[self.leaf] = int(value)
-        # variables[self.leaf] = value
-        pass
+        if len(self.children) == 1 and len(self.leaf) == 1:
+            id = self.leaf
+            if id in const.keys():
+                print(f"No puedes modificar la constante {id}")
+                exit(1)
+
+            if not id in variables.keys():
+                print(f" '{id}' no esta declarada")
+                exit(1)
+
+            # if self.children
+            # valor_der = self.children[0].children[0].children[0].leaf
+            # if not valor_der in variables.keys() and not valor_der in const.keys():
+            #     print(f"{valor_der} no está declarada")
+            #     exit(1)
 
 
 class StatementList(Node):
@@ -137,20 +157,3 @@ class Number(Node):
 class Group(Node):
     def __init__(self, type, children=None, leaf=None):
         super().__init__(type, children=children, leaf=leaf)
-
-
-# def __str__(self):
-#         return self.__print_last_child(1)
-
-
-# def __print_last_child(self, i):
-#         s = self.type
-#         if self.leaf != None:
-#             if isinstance(self.leaf, Node):
-#                 print("Node")
-#                 s = self.leaf.__print_last_child(i+1)
-#             else:
-#                 s = str(self.leaf)
-#         for children in self.children:
-#             s = children.__print_last_child(i+1)
-#         return s
