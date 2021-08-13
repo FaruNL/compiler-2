@@ -1,5 +1,6 @@
-CONST m = 1;
-VAR x;
+CONST m = 1, n = 2;
+VAR x, y;
+PROCEDURE multiply;;
 BEGIN
    x := 1 + 2
 END.

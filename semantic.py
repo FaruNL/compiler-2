@@ -45,12 +45,6 @@ class ConstDecl(Node):
 class ConstAssignmentList(Node):
     def __init__(self, type, children=None, leaf=None):
         super().__init__(type, children=children, leaf=leaf)
-        self.__get_const()
-
-    def __get_const(self):
-        if self.leaf[0] in const.keys():
-            print(f"Constant '{self.leaf[0]}' already exits")
-            exit(1)
 
 
 class VarDecl(Node):
@@ -61,13 +55,6 @@ class VarDecl(Node):
 class IdentList(Node):
     def __init__(self, type, children=None, leaf=None):
         super().__init__(type, children=children, leaf=leaf)
-        self.__get_id()
-
-    def __get_id(self):
-        if self.leaf in variables.keys():
-            print(f"Variable '{self.leaf}' already exits")
-            exit(1)
-        variables[self.leaf] = None
 
 
 class ProcDecl(Node):
@@ -136,20 +123,3 @@ class Number(Node):
 class Group(Node):
     def __init__(self, type, children=None, leaf=None):
         super().__init__(type, children=children, leaf=leaf)
-
-
-# def __str__(self):
-#         return self.__print_last_child(1)
-
-
-# def __print_last_child(self, i):
-#         s = self.type
-#         if self.leaf != None:
-#             if isinstance(self.leaf, Node):
-#                 print("Node")
-#                 s = self.leaf.__print_last_child(i+1)
-#             else:
-#                 s = str(self.leaf)
-#         for children in self.children:
-#             s = children.__print_last_child(i+1)
-#         return s
